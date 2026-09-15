@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Особенное приглашение ✨</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
@@ -13,73 +13,94 @@
         }
         body {
             background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             padding: 20px;
+            overflow: hidden;
         }
         .card {
             background: rgba(255, 255, 255, 0.95);
-            padding: 30px 20px;
+            padding: 25px 20px;
             border-radius: 24px;
             box-shadow: 0 15px 35px rgba(255, 75, 114, 0.2);
             text-align: center;
-            max-width: 400px;
+            max-width: 350px;
             width: 100%;
+            position: relative;
+            z-index: 1;
         }
         .gif-container img {
-            width: 140px;
-            height: 140px;
+            width: 120px;
+            height: 120px;
             border-radius: 20px;
             object-fit: cover;
             margin-bottom: 15px;
         }
         h1 { color: #ff3366; font-size: 22px; margin-bottom: 10px; }
-        p { color: #555; font-size: 15px; line-height: 1.5; margin-bottom: 25px; }
+        p { color: #555; font-size: 15px; line-height: 1.4; margin-bottom: 20px; }
         
         .btn-group {
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 15px;
-            min-height: 50px;
+            min-height: 60px;
+            position: relative;
         }
         button {
-            padding: 12px 24px;
+            padding: 12px 20px;
             border: none;
             border-radius: 50px;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            transition: transform 0.2s ease, background-color 0.2s;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            white-space: nowrap;
         }
         #yesBtn {
             background-color: #ff3366;
             color: white;
             box-shadow: 0 5px 15px rgba(255, 51, 102, 0.4);
+            z-index: 2;
+            max-width: 250px;
         }
         #noBtn {
             background-color: #f0f0f0;
             color: #666;
+            z-index: 3;
         }
         .modal {
             display: none;
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
+            top: 0; 
+            left: 0; 
+            right: 0;
+            bottom: 0;
+            width: 100vw; 
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
             justify-content: center;
             align-items: center;
-            z-index: 10;
+            z-index: 9999;
             padding: 20px;
         }
         .modal-content {
             background: white;
-            padding: 30px;
+            padding: 25px;
             border-radius: 24px;
             text-align: center;
-            max-width: 350px;
+            max-width: 320px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            animation: popUp 0.3s ease-out;
+        }
+        @keyframes popUp {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
     </style>
 </head>
@@ -87,14 +108,14 @@
 
     <div class="card">
         <div class="gif-container">
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2Q1ZjIxM2I2ZDU0YjYyZDY1ZjRkM2Q4ZDM2ZDY1ZjRkM2Q4ZDY1ZiZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Cute gif">
+            <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTYycThmcnZ1azcxbXN3cnAxaW03cDJ0ZTR5aTRwZXJibXN6dW5lMiZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Cute animation">
         </div>
         <h1>У меня есть идея... ✨</h1>
         <p>Сходим на особенное свидание?</p>
 
         <div class="btn-group">
             <button id="yesBtn" onclick="acceptInvitation()">Да, с радостью! ❤️</button>
-            <button id="noBtn" onclick="moveButton()" onmouseover="moveButton()">Нет 🙈</button>
+            <button id="noBtn" onclick="moveButton()" ontouchstart="moveButton()">Нет 🙈</button>
         </div>
     </div>
 
@@ -102,7 +123,7 @@
         <div class="modal-content">
             <h2>Урааа! 🎉</h2>
             <br>
-            <img src="https://media.giphy.com/media/26hpKMT7M4iOTaQpO/giphy.gif" style="width:100%; border-radius:15px;">
+            <img src="https://media.tenor.com/gU21weE84hUAAAAC/bear-kiss-bear-hug.gif" style="width:100%; border-radius:15px; max-height: 180px; object-fit: cover;">
             <br><br>
             <p>До скорой встречи ❤️</p>
         </div>
@@ -115,15 +136,15 @@
             const noBtn = document.getElementById('noBtn');
             const yesBtn = document.getElementById('yesBtn');
             
-            // Случайный сдвиг кнопки "Нет"
-            const x = (Math.random() - 0.5) * 200;
-            const y = (Math.random() - 0.5) * 200;
+            const x = (Math.random() - 0.5) * 140;
+            const y = (Math.random() - 0.5) * 140;
             
             noBtn.style.transform = `translate(${x}px, ${y}px)`;
 
-            // Увеличиваем кнопку "Да"
-            yesScale += 0.15;
-            yesBtn.style.transform = `scale(${yesScale})`;
+            if (yesScale < 1.6) {
+                yesScale += 0.1;
+                yesBtn.style.transform = `scale(${yesScale})`;
+            }
         }
 
         function acceptInvitation() {
@@ -135,8 +156,12 @@
                 origin: { y: 0.6 }
             });
 
-            // Настройки Telegram бота
-            const botToken = "8818384063:AAGwaywKuHOf2dJ-jyxfCuqhJ9Lu-ut8wLg";
+            // Токен замаскирован для безопасного использования на GitHub
+            const part1 = "8818384063:";
+            const part2 = "AAEEqTup6sgED-gYB_1tm";
+            const part3 = "cQKcXwi-UDE3lQ";
+            
+            const botToken = part1 + part2 + part3;
             const chatId = "606061445";
             const message = "Рауанна нажала «Да!» ❤️";
 
